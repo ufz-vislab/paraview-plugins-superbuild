@@ -1,0 +1,9 @@
+[submodule "paraview-superbuild"]
+	path = paraview-superbuild
+	url = https://gitlab.kitware.com/paraview/paraview-superbuild.git
+[submodule "envimet-reader"]
+	path = envimet-reader
+	url = https://github.com/ufz-vislab/EnvimetReader.git
+[submodule "fbx-exporter"]
+	path = fbx-exporter
+	url = https://github.com/ufz-vislab/VtkFbxConverter.git
