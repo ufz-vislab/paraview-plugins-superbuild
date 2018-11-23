@@ -20,7 +20,7 @@ jobs:
       cd build
       SET CC=cl.exe
       SET CXX=cl.exe
-      cmake ../paraview-superbuild -G Ninja -DCMAKE_BUILD_TYPE=Release -DENABLE_ospray=ON -DENABLE_python=ON -DENABLE_qt5=ON -Dqt5_SOURCE_SELECTION=5.9 -DENABLE_paraviewpluginsexternal=ON -Dparaview_PLUGINS_EXTERNAL='FbxExporter;EnvimetReader' -Dparaview_PLUGIN_FbxExporter_PATH=../fbx-exporter -Dparaview_PLUGIN_EnvimetReader_PATH=../envimet-reader
+      cmake ../paraview-superbuild -G Ninja -DCMAKE_BUILD_TYPE=Release -DENABLE_ospray=ON -DENABLE_python=ON -DENABLE_qt5=ON -Dqt5_SOURCE_SELECTION=5.9 -DENABLE_paraviewpluginsexternal=ON -Dparaview_PLUGINS_EXTERNAL='EnvimetReader' -Dparaview_PLUGIN_FbxExporter_PATH=../fbx-exporter -Dparaview_PLUGIN_EnvimetReader_PATH=../envimet-reader
       ninja
       ctest -R cpack
       mkdir publish
