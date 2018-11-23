@@ -1,0 +1,31 @@
+jobs:
+- job: Windows
+  pool:
+    vmImage: 'vs2017-win2016'
+  timeoutInMinutes: 0
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.7'
+  - script: |
+      cd paraview-superbuild\superbuild
+      git remote add bilke https://gitlab.kitware.com/bilke/common-superbuild.git
+      git fetch bilke
+      git checkout patch-1
+      cd ..\..
+      rd /S /Q .git
+      choco install -y ActivePerl ninja
+      call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
+      mkdir build
+      cd build
+      SET CC=cl.exe
+      SET CXX=cl.exe
+      cmake ../paraview-superbuild -G Ninja -DCMAKE_BUILD_TYPE=Release -DENABLE_ospray=ON -DENABLE_python=ON -DENABLE_qt5=ON -Dqt5_SOURCE_SELECTION=5.9 -DENABLE_paraviewpluginsexternal=ON -Dparaview_PLUGINS_EXTERNAL='FbxExporter;EnvimetReader' -Dparaview_PLUGIN_FbxExporter_PATH=../fbx-exporter -Dparaview_PLUGIN_EnvimetReader_PATH=../envimet-reader
+      ninja
+      ctest -R cpack
+      mkdir publish
+      mv *.zip publish
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'packages'
+      targetPath: 'publish'
