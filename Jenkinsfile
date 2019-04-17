@@ -2,7 +2,13 @@
 @Library('jenkins-pipeline@1.0.21') _
 
 pipeline {
-    agent { label "win1" }
+    agent {
+        node {
+            label "win1"
+            customWorkspace "E:\\_pv"
+        }
+
+    }
     environment {
         MSVC_NUMBER = '15'
         MSVC_VERSION = '2017'
