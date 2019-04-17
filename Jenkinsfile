@@ -22,23 +22,24 @@ pipeline {
                 script {
                     configure {
                         sourceDir = 'src/paraview-superbuild'
+                        // keepDir = true
                         cmakeOptions = '-DENABLE_ospray=ON -DENABLE_python=ON -DENABLE_qt5=ON -Dqt5_SOURCE_SELECTION=5.9 -DENABLE_paraviewpluginsexternal=ON -Dparaview_PLUGINS_EXTERNAL="FbxExporter;EnvimetReader" -Dparaview_PLUGIN_FbxExporter_PATH=../src/fbx-exporter -Dparaview_PLUGIN_EnvimetReader_PATH=../src/envimet-reader -Dqt5_EXTRA_CONFIGURATION_OPTIONS="-opengl;dynamic"'
                     }
                     build { }
                 }
             }
         }
-        stage('Package') {
-            steps {
-                dir('build') {
-                    bat "ctest -R cpack"
-                }
-            }
-        }
+        // stage('Package') {
+            // steps {
+                // dir('build') {
+                    // bat "ctest -R cpack"
+                // }
+            // }
+        // }
     }
     post {
         success {
-            archiveArtifacts "**/*.zip"
+            archiveArtifacts "build/*.zip,build/install/**/FbxExporter.dll,build/install/**/EnvimetReader.dll"
         }
     }
 }
